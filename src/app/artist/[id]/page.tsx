@@ -52,7 +52,6 @@ export default function ArtistPage() {
         ) : null}
         <div className="artist-overview-content">
           <h2>Sobre o artista</h2>
-          <p className="artist-overview-text">Mais contexto para conhecer o perfil e o desempenho atual.</p>
           <div className="artist-overview-stats">
             <article>
               <span>Fans</span>

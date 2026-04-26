@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -26,7 +27,14 @@ export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
   return (
     <header className="nav-shell">
       <Link href="/" className="brand">
-        SoundSphere
+        <Image
+          src="/assets/branding/sound-sphere.png"
+          alt="SoundSphere"
+          width={24}
+          height={24}
+          className="brand-logo"
+        />
+        <span>SoundSphere</span>
       </Link>
 
       <nav className="nav-links">

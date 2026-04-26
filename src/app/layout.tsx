@@ -15,8 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SoundSphere",
+  title: {
+    default: "SoundSphere | Music Discovery",
+    template: "%s | SoundSphere",
+  },
   description: "Music discovery app built with Next.js and Deezer API",
+  icons: {
+    icon: "/assets/branding/sound-sphere.png",
+    shortcut: "/assets/branding/sound-sphere.png",
+    apple: "/assets/branding/sound-sphere.png",
+  },
 };
 
 export default function RootLayout({

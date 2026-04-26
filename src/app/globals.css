@@ -98,6 +98,9 @@ a {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -106,6 +109,15 @@ a {
   background-clip: text;
   color: transparent;
   flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0.35rem;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated) 80%, transparent);
 }
 
 .nav-links {
