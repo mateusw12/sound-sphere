@@ -1,6 +1,7 @@
 export { useAlbum, useAlbumTracks } from "@/hooks/deezer/use-album";
 export { useArtist, useArtistAlbums, useArtistTop } from "@/hooks/deezer/use-artist";
 export { useChart } from "@/hooks/deezer/use-chart";
+export { usePlaylist, usePlaylistTracks } from "@/hooks/deezer/use-playlist";
 export {
   useSearchAlbums,
   useSearchArtists,

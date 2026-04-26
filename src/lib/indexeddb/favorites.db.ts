@@ -13,18 +13,31 @@ export type FavoriteItem = {
 };
 
 const DB_NAME = "soundsphere-db";
-const DB_VERSION = 1;
 const STORE = "favorites";
 
 async function openDB() {
+  const db = await new Promise<IDBDatabase>((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    request.onupgradeneeded = () => resolve(request.result);
+  });
+
+  if (db.objectStoreNames.contains(STORE)) {
+    return db;
+  }
+
+  const nextVersion = db.version + 1;
+  db.close();
+
   return await new Promise<IDBDatabase>((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = indexedDB.open(DB_NAME, nextVersion);
 
     request.onupgradeneeded = () => {
-      const db = request.result;
+      const upgraded = request.result;
 
-      if (!db.objectStoreNames.contains(STORE)) {
-        const store = db.createObjectStore(STORE, { keyPath: "id" });
+      if (!upgraded.objectStoreNames.contains(STORE)) {
+        const store = upgraded.createObjectStore(STORE, { keyPath: "id" });
         store.createIndex("by-kind", "kind", { unique: false });
         store.createIndex("by-owner", "owner", { unique: false });
       }

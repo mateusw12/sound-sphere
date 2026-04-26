@@ -39,6 +39,7 @@ type PlayerContextData = {
   playNext: () => void;
   pause: () => void;
   resume: () => void;
+  stop: () => void;
 };
 
 const PlayerContext = createContext<PlayerContextData | undefined>(undefined);
@@ -144,6 +145,11 @@ export function PlayerProvider({ children }: PropsWithChildren) {
       },
       pause: () => setIsPlaying(false),
       resume: () => setIsPlaying(true),
+      stop: () => {
+        setIsPlaying(false);
+        setCurrentTrack(null);
+        setCurrentQueueId(null);
+      },
     }),
     [currentTrack, currentQueueId, isLoading, isPlaying, mutate, owner, queue],
   );

@@ -11,7 +11,7 @@ type TrackCardProps = {
 };
 
 export function TrackCard({ track }: TrackCardProps) {
-  const { playTrack, addToQueue } = usePlayer();
+  const { playTrack, addToQueue, stop } = usePlayer();
   const image = track.album?.cover_medium ?? track.album?.cover;
 
   return (
@@ -43,6 +43,9 @@ export function TrackCard({ track }: TrackCardProps) {
         }}
       >
         {track.preview ? "Ouvir preview" : "Sem preview"}
+      </button>
+      <button className="button ghost" type="button" onClick={stop}>
+        Parar
       </button>
       <button
         className="button ghost"

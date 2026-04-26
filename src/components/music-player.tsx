@@ -16,6 +16,7 @@ export function MusicPlayer() {
     playNext,
     pause,
     resume,
+    stop,
   } = usePlayer();
 
   useEffect(() => {
@@ -80,6 +81,9 @@ export function MusicPlayer() {
       <div className="player-actions">
         <button className="button" type="button" onClick={isPlaying ? pause : resume}>
           {isPlaying ? "Pausar" : "Tocar"}
+        </button>
+        <button className="button ghost" type="button" onClick={stop}>
+          Parar
         </button>
         <button className="button ghost" type="button" onClick={playNext}>
           Proxima
