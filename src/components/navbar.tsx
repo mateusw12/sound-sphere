@@ -22,6 +22,7 @@ export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
     { href: "/playlists", label: "Playlists" },
     { href: "/search", label: "Search" },
     { href: "/favorites", label: "Favorites" },
+    { href: "/about", label: "Sobre" },
   ];
 
   return (
