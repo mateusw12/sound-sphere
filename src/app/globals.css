@@ -664,7 +664,7 @@ a {
 }
 
 .artist-tabs {
-  margin-top: 0.85rem;
+  margin-top: 0.9rem;
   display: inline-grid;
   grid-auto-flow: column;
   gap: 0.4rem;
@@ -672,6 +672,10 @@ a {
   border-radius: 999px;
   padding: 0.28rem;
   background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+}
+
+.artist-tabs-shell {
+  margin-bottom: 0.3rem;
 }
 
 .artist-tab {
@@ -693,6 +697,14 @@ a {
   background: color-mix(in srgb, var(--primary) 24%, transparent);
   color: var(--text);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 38%, transparent);
+}
+
+.artist-pane {
+  gap: 0.65rem;
+}
+
+.artist-pane h2 {
+  margin-bottom: 0.1rem;
 }
 
 .favorites-page {

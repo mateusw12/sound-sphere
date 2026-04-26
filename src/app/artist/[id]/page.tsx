@@ -30,7 +30,7 @@ export default function ArtistPage() {
         <h1>{artist.name}</h1>
       </header>
 
-      <div className="artist-tabs" role="tablist" aria-label="Conteudo do artista">
+      <div className="artist-tabs artist-tabs-shell" role="tablist" aria-label="Conteudo do artista">
         <button
           type="button"
           role="tab"
@@ -52,12 +52,12 @@ export default function ArtistPage() {
       </div>
 
       {activeTab === "tracks" ? (
-        <section className="section-block">
+        <section className="section-block artist-pane artist-pane-tracks">
           <h2>Top faixas</h2>
           <AudioTrackList tracks={topTracks?.data ?? []} limit={20} emptyMessage="Artista sem faixas." />
         </section>
       ) : (
-        <section className="section-block">
+        <section className="section-block artist-pane artist-pane-albums">
           <h2>Albuns</h2>
           <div className="grid-cards">
             {(albums?.data ?? []).slice(0, 10).map((album) => (
