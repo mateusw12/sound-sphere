@@ -16,7 +16,7 @@ import {
   reorderQueue,
   removeQueueTrack,
   type QueueTrack,
-} from "@/lib/indexeddb/queue.db";
+} from "@/lib/indexeddb";
 
 type PlayerTrack = {
   id: number;

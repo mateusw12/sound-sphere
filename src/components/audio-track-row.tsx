@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { DeezerTrack } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
 import { usePlayer } from "@/components/player-context";
+import { FavoriteKind } from "@/lib/indexeddb";
 
 type AudioTrackRowProps = {
   track: DeezerTrack;
@@ -93,7 +94,7 @@ export function AudioTrackRow({ track, index }: AudioTrackRowProps) {
 
         <FavoriteButton
           compact
-          kind="track"
+          kind={FavoriteKind.Track}
           entityId={track.id}
           title={track.title}
           subtitle={track.artist.name}

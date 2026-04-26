@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useFavorites } from "@/hooks/favorites/use-favorites";
-import type { FavoriteKind } from "@/lib/indexeddb/favorites.db";
+import type { FavoriteKind } from "@/lib/indexeddb";
 
 function FavoriteGroup({
   title,

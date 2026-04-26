@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { DeezerAlbum } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteKind } from "@/lib/enum";
 
 type AlbumCardProps = {
   album: DeezerAlbum;
@@ -23,7 +24,7 @@ export function AlbumCard({ album }: AlbumCardProps) {
         </Link>
         <FavoriteButton
           compact
-          kind="album"
+          kind={FavoriteKind.Album}
           entityId={album.id}
           title={album.title}
           subtitle={album.artist?.name}

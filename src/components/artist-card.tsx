@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { DeezerArtist } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteKind } from "@/lib/indexeddb";
 
 type ArtistCardProps = {
   artist: DeezerArtist;
@@ -21,7 +22,7 @@ export function ArtistCard({ artist }: ArtistCardProps) {
         Ver artista
       </Link>
       <FavoriteButton
-        kind="artist"
+        kind={FavoriteKind.Artist}
         entityId={artist.id}
         title={artist.name}
         subtitle={artist.nb_fan ? `${artist.nb_fan.toLocaleString("pt-BR")} fans` : "Artista"}

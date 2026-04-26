@@ -4,13 +4,13 @@ import { useCallback, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import {
+  FavoriteKind,
   type FavoriteItem,
-  type FavoriteKind,
   isFavorite,
   listFavorites,
   removeFavorite,
   upsertFavorite,
-} from "@/lib/indexeddb/favorites.db";
+} from "@/lib/indexeddb";
 
 type FavoritePayload = {
   kind: FavoriteKind;
@@ -54,10 +54,10 @@ export function useFavorites() {
 
   const groups = useMemo(
     () => ({
-      tracks: items.filter((item) => item.kind === "track"),
-      artists: items.filter((item) => item.kind === "artist"),
-      albums: items.filter((item) => item.kind === "album"),
-      playlists: items.filter((item) => item.kind === "playlist"),
+      tracks: items.filter((item) => item.kind === FavoriteKind.Track),
+      artists: items.filter((item) => item.kind === FavoriteKind.Artist),
+      albums: items.filter((item) => item.kind === FavoriteKind.Album),
+      playlists: items.filter((item) => item.kind === FavoriteKind.Playlist),
     }),
     [items],
   );

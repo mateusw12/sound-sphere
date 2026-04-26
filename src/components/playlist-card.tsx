@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { DeezerPlaylist } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteKind } from "@/lib/indexeddb";
 
 type PlaylistCardProps = {
   playlist: DeezerPlaylist;
@@ -23,7 +24,7 @@ export function PlaylistCard({ playlist }: PlaylistCardProps) {
         </Link>
         <FavoriteButton
           compact
-          kind="playlist"
+          kind={FavoriteKind.Playlist}
           entityId={playlist.id}
           title={playlist.title}
           subtitle={playlist.nb_tracks ? `${playlist.nb_tracks} faixas` : "Playlist"}
