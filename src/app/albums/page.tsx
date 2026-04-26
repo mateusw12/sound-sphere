@@ -1,6 +1,7 @@
 "use client";
 
 import { AlbumCard } from "@/components/album-card";
+import { PageSearchBar } from "@/components/page-search-bar";
 import { useChart } from "@/hooks/deezer";
 
 export default function AlbumsPage() {
@@ -20,6 +21,7 @@ export default function AlbumsPage() {
         <p className="kicker">Albums</p>
         <h1>Albuns mais ouvidos</h1>
       </header>
+      <PageSearchBar />
 
       <div className="grid-cards">
         {(data?.albums.data ?? []).slice(0, 30).map((album) => (

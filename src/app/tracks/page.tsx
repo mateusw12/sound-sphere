@@ -1,6 +1,7 @@
 "use client";
 
 import { TrackCard } from "@/components/track-card";
+import { PageSearchBar } from "@/components/page-search-bar";
 import { useChart } from "@/hooks/deezer";
 
 export default function TracksPage() {
@@ -20,9 +21,10 @@ export default function TracksPage() {
         <p className="kicker">Tracks</p>
         <h1>Top musicas do momento</h1>
       </header>
+      <PageSearchBar placeholder="Buscar e abrir na pagina de pesquisa" />
 
       <div className="grid-cards">
-        {(data?.tracks.data ?? []).slice(0, 30).map((track) => (
+        {(data?.tracks.data ?? []).slice(0, 50).map((track) => (
           <TrackCard key={track.id} track={track} />
         ))}
       </div>

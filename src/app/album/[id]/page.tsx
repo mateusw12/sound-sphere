@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { TrackCard } from "@/components/track-card";
+import { AudioTrackRow } from "@/components/audio-track-row";
 import { useAlbum, useAlbumTracks } from "@/hooks/deezer";
 
 export default function AlbumPage() {
@@ -29,11 +29,11 @@ export default function AlbumPage() {
 
       <section className="section-block">
         <h2>Faixas</h2>
-        <div className="grid-cards">
-          {(tracks?.data ?? []).slice(0, 20).map((track) => (
-            <TrackCard key={track.id} track={track} />
+        <ol className="audio-list">
+          {(tracks?.data ?? []).slice(0, 30).map((track, index) => (
+            <AudioTrackRow key={track.id} track={track} index={index} />
           ))}
-        </div>
+        </ol>
       </section>
     </section>
   );

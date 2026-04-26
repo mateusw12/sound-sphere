@@ -1,6 +1,7 @@
 "use client";
 
 import { PlaylistCard } from "@/components/playlist-card";
+import { PageSearchBar } from "@/components/page-search-bar";
 import { useTopPlaylists } from "@/hooks/deezer";
 
 export default function PlaylistsPage() {
@@ -20,6 +21,7 @@ export default function PlaylistsPage() {
         <p className="kicker">Playlists</p>
         <h1>Playlists para descobrir agora</h1>
       </header>
+      <PageSearchBar />
 
       <div className="grid-cards">
         {(data?.data ?? []).slice(0, 30).map((playlist) => (

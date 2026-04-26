@@ -221,8 +221,8 @@ a {
 
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 0.8rem;
 }
 
 .card {
@@ -234,8 +234,8 @@ a {
     color-mix(in srgb, var(--surface-elevated) 92%, transparent),
     color-mix(in srgb, var(--surface) 88%, transparent)
   );
-  border-radius: 14px;
-  padding: 0.8rem;
+  border-radius: 12px;
+  padding: 0.66rem;
   box-shadow: 0 10px 24px rgba(5, 12, 24, 0.26);
   transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
 }
@@ -248,13 +248,13 @@ a {
 
 .card h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.94rem;
 }
 
 .card p {
   margin: 0;
   color: var(--text-soft);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
 }
 
 .card-cover {
@@ -343,6 +343,16 @@ a {
   gap: 0.45rem;
 }
 
+.search-shell.page-search {
+  margin-bottom: 0;
+}
+
+.search-inline {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem;
+}
+
 .search-label {
   font-size: 0.9rem;
   color: var(--text-soft);
@@ -394,8 +404,36 @@ a {
 
 .favorites-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.8rem;
+}
+
+.home-section {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.85rem;
+  background: linear-gradient(
+    170deg,
+    color-mix(in srgb, var(--surface-elevated) 90%, transparent),
+    color-mix(in srgb, var(--surface) 88%, transparent)
+  );
+}
+
+.home-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.home-section-head h2 {
+  margin: 0;
+}
+
+.home-section-head p {
+  margin: 0.2rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.82rem;
 }
 
 .favorites-page {
@@ -451,6 +489,67 @@ a {
 
 .favorites-item p {
   color: var(--text-soft);
+}
+
+.audio-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.46rem;
+}
+
+.audio-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.55rem 0.62rem;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+}
+
+.audio-index {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15rem 0.2rem;
+}
+
+.audio-main {
+  display: grid;
+  min-width: 0;
+  gap: 0.2rem;
+}
+
+.audio-main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  min-width: 0;
+}
+
+.audio-meta a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.audio-actions {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.34rem;
 }
 
 .queue-panel {
@@ -645,7 +744,21 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .audio-row {
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+
+  .audio-actions {
+    grid-column: 1 / -1;
+    justify-content: start;
+  }
+
   .grid-cards {
-    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  }
+
+  .search-inline {
+    grid-template-columns: 1fr;
   }
 }

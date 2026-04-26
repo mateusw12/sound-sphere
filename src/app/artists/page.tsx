@@ -1,6 +1,7 @@
 "use client";
 
 import { ArtistCard } from "@/components/artist-card";
+import { PageSearchBar } from "@/components/page-search-bar";
 import { useChart } from "@/hooks/deezer";
 
 export default function ArtistsPage() {
@@ -20,6 +21,7 @@ export default function ArtistsPage() {
         <p className="kicker">Artists</p>
         <h1>Artistas em destaque</h1>
       </header>
+      <PageSearchBar />
 
       <div className="grid-cards">
         {(data?.artists.data ?? []).slice(0, 30).map((artist) => (

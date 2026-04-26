@@ -3,6 +3,7 @@
 import { ArtistCard } from "@/components/artist-card";
 import { AlbumCard } from "@/components/album-card";
 import { TrackCard } from "@/components/track-card";
+import { PageSearchBar } from "@/components/page-search-bar";
 import { useChart } from "@/hooks/deezer";
 
 export default function HomePage() {
@@ -22,29 +23,45 @@ export default function HomePage() {
         <p className="kicker">Discover music now</p>
         <h1>Explore o que esta em alta no mundo.</h1>
       </header>
+      <PageSearchBar />
 
-      <section className="section-block">
-        <h2>Top Tracks</h2>
+      <section className="section-block home-section">
+        <div className="home-section-head">
+          <div>
+            <h2>Top Tracks</h2>
+            <p>As faixas com maior movimento agora.</p>
+          </div>
+        </div>
         <div className="grid-cards">
-          {(data?.tracks.data ?? []).slice(0, 12).map((track) => (
+          {(data?.tracks.data ?? []).slice(0, 16).map((track) => (
             <TrackCard key={track.id} track={track} />
           ))}
         </div>
       </section>
 
-      <section className="section-block">
-        <h2>Top Artists</h2>
+      <section className="section-block home-section">
+        <div className="home-section-head">
+          <div>
+            <h2>Top Artists</h2>
+            <p>Artistas em evidência nas paradas.</p>
+          </div>
+        </div>
         <div className="grid-cards">
-          {(data?.artists.data ?? []).slice(0, 8).map((artist) => (
+          {(data?.artists.data ?? []).slice(0, 10).map((artist) => (
             <ArtistCard key={artist.id} artist={artist} />
           ))}
         </div>
       </section>
 
-      <section className="section-block">
-        <h2>Top Albums</h2>
+      <section className="section-block home-section">
+        <div className="home-section-head">
+          <div>
+            <h2>Top Albums</h2>
+            <p>Albuns com melhor desempenho global.</p>
+          </div>
+        </div>
         <div className="grid-cards">
-          {(data?.albums.data ?? []).slice(0, 8).map((album) => (
+          {(data?.albums.data ?? []).slice(0, 10).map((album) => (
             <AlbumCard key={album.id} album={album} />
           ))}
         </div>
