@@ -430,6 +430,57 @@ a {
   color: color-mix(in srgb, var(--text-soft) 86%, transparent);
 }
 
+.genre-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: -0.1rem;
+}
+
+.genre-chip {
+  --chip-accent: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  background: color-mix(in srgb, var(--chip-accent) 10%, var(--surface-elevated));
+  color: color-mix(in srgb, var(--chip-accent) 55%, var(--text));
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.genre-chip:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--chip-accent) 55%, var(--border));
+  background: color-mix(in srgb, var(--chip-accent) 16%, var(--surface-elevated));
+}
+
+.genre-chip.active {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--chip-accent) 65%, var(--border));
+  background: color-mix(in srgb, var(--chip-accent) 28%, transparent);
+}
+
+.genre-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.genre-chip-icon svg {
+  width: 0.74rem;
+  height: 0.74rem;
+}
+
+.genre-result-note {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+}
+
 .search-state {
   margin: 0;
   color: var(--text-soft);
