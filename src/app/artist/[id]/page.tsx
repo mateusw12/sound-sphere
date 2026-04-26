@@ -6,9 +6,10 @@ import { useParams } from "next/navigation";
 import { AlbumCard } from "@/components/album-card";
 import { AudioTrackList } from "@/components/audio-track-list";
 import { useArtist, useArtistAlbums, useArtistTop } from "@/hooks/deezer";
+import { ArtistTab } from "@/lib/enum";
 
 export default function ArtistPage() {
-  const [activeTab, setActiveTab] = useState<"tracks" | "albums">("tracks");
+  const [activeTab, setActiveTab] = useState<ArtistTab>(ArtistTab.Tracks);
   const params = useParams<{ id: string }>();
   const id = params.id;
 
@@ -73,24 +74,24 @@ export default function ArtistPage() {
         <button
           type="button"
           role="tab"
-          aria-selected={activeTab === "tracks"}
-          className={activeTab === "tracks" ? "artist-tab active" : "artist-tab"}
-          onClick={() => setActiveTab("tracks")}
+          aria-selected={activeTab === ArtistTab.Tracks}
+          className={activeTab === ArtistTab.Tracks ? "artist-tab active" : "artist-tab"}
+          onClick={() => setActiveTab(ArtistTab.Tracks)}
         >
           Musicas
         </button>
         <button
           type="button"
           role="tab"
-          aria-selected={activeTab === "albums"}
-          className={activeTab === "albums" ? "artist-tab active" : "artist-tab"}
-          onClick={() => setActiveTab("albums")}
+          aria-selected={activeTab === ArtistTab.Albums}
+          className={activeTab === ArtistTab.Albums ? "artist-tab active" : "artist-tab"}
+          onClick={() => setActiveTab(ArtistTab.Albums)}
         >
           Albuns
         </button>
       </div>
 
-      {activeTab === "tracks" ? (
+      {activeTab === ArtistTab.Tracks ? (
         <section className="section-block artist-pane artist-pane-tracks">
           <h2>Top faixas</h2>
           <AudioTrackList tracks={topTracks?.data ?? []} limit={20} emptyMessage="Artista sem faixas." />

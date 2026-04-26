@@ -5,11 +5,10 @@ import { Navbar } from "@/components/navbar";
 import { MusicPlayer } from "@/components/music-player";
 import { PlayerProvider } from "@/components/player-context";
 import { QueuePanel } from "@/components/queue-panel";
-
-type Theme = "light" | "dark";
+import { Theme } from "@/lib/enum";
 
 export function AppShell({ children }: PropsWithChildren) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(Theme.Dark);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -21,8 +20,8 @@ export function AppShell({ children }: PropsWithChildren) {
       <div className="app-bg" />
       <div className="layout">
         <Navbar
-          onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-          themeLabel={theme === "dark" ? "Tema claro" : "Tema escuro"}
+          onToggleTheme={() => setTheme((prev) => (prev === Theme.Dark ? Theme.Light : Theme.Dark))}
+          themeLabel={theme === Theme.Dark ? "Tema claro" : "Tema escuro"}
         />
         <section className="content-grid">
           <main className="content">{children}</main>
