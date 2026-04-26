@@ -386,6 +386,184 @@ a {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 28px rgba(0, 0, 0, 0.24);
 }
 
+.floating-now-playing {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 40;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  background: color-mix(in srgb, var(--bg-soft) 92%, transparent);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(4, 10, 22, 0.35);
+}
+
+.floating-track-text {
+  display: grid;
+  text-align: left;
+}
+
+.floating-track-text strong,
+.floating-track-text small {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.floating-track-text small {
+  color: var(--text-soft);
+}
+
+.floating-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: #1ed760;
+  box-shadow: 0 0 0 5px color-mix(in srgb, #1ed760 28%, transparent);
+}
+
+.floating-player {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 45;
+  width: min(360px, calc(100vw - 1.6rem));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-soft) 94%, transparent);
+  backdrop-filter: blur(10px);
+  padding: 0.72rem;
+  display: grid;
+  gap: 0.6rem;
+  box-shadow: 0 18px 38px rgba(4, 10, 22, 0.42);
+  transform: translateY(14px) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.floating-player.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.floating-player-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-left.compact .player-title {
+  font-size: 0.92rem;
+}
+
+.player-progress-shell {
+  width: 100%;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+  overflow: hidden;
+}
+
+.player-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1ed760, color-mix(in srgb, #1ed760 45%, var(--primary)));
+  transition: width 0.16s linear;
+}
+
+.player-progress-slider {
+  width: 100%;
+  appearance: none;
+  height: 0.34rem;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.player-progress-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.74rem;
+  height: 0.74rem;
+  border-radius: 999px;
+  border: 0;
+  background: #f2f4f1;
+  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.35);
+}
+
+.player-progress-slider::-moz-range-thumb {
+  width: 0.74rem;
+  height: 0.74rem;
+  border-radius: 999px;
+  border: 0;
+  background: #f2f4f1;
+  box-shadow: 0 0 0 2px rgba(30, 215, 96, 0.35);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.player-time-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+}
+
+.player-actions.spotify-like {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.38rem;
+  justify-content: start;
+}
+
+.icon-button {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-elevated) 75%, transparent);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, #1ed760 50%, var(--border));
+  background: color-mix(in srgb, #1ed760 16%, var(--surface-elevated));
+}
+
+.icon-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-button.subtle {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
 .player-left {
   display: grid;
   gap: 0.2rem;
@@ -726,8 +904,13 @@ a {
   }
 
   .player-shell {
-    grid-template-columns: 1fr;
-    align-items: stretch;
+    display: none;
+  }
+
+  .floating-now-playing,
+  .floating-player {
+    right: 0.8rem;
+    bottom: 0.8rem;
   }
 
   .queue-panel {
