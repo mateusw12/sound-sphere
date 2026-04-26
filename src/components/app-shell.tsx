@@ -9,19 +9,28 @@ import { QueuePanel } from "@/components/queue-panel";
 type Theme = "light" | "dark";
 
 export function AppShell({ children }: PropsWithChildren) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return "dark";
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("soundsphere-theme");
+
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved);
     }
 
-    const saved = window.localStorage.getItem("soundsphere-theme") as Theme | null;
-    return saved ?? "dark";
-  });
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+
+    if (!hydrated) {
+      return;
+    }
+
     window.localStorage.setItem("soundsphere-theme", theme);
-  }, [theme]);
+  }, [theme, hydrated]);
 
   return (
     <PlayerProvider>
