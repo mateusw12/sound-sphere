@@ -89,7 +89,14 @@ export function QueuePanel() {
           >
             <div className="queue-order">{index + 1}</div>
             <span className="queue-drag-handle" aria-hidden>
-              |||
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5" cy="4" r="1" />
+                <circle cx="11" cy="4" r="1" />
+                <circle cx="5" cy="8" r="1" />
+                <circle cx="11" cy="8" r="1" />
+                <circle cx="5" cy="12" r="1" />
+                <circle cx="11" cy="12" r="1" />
+              </svg>
             </span>
             <button type="button" className="queue-track" onClick={() => playFromQueue(item.id)}>
               <strong>{item.title}</strong>

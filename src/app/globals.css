@@ -513,10 +513,30 @@ a {
 
 .queue-drag-handle {
   color: var(--text-soft);
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
   user-select: none;
+  opacity: 0.35;
+  transition: opacity 0.18s ease;
+}
+
+.queue-drag-handle svg {
+  width: 0.92rem;
+  height: 0.92rem;
+}
+
+.queue-drag-handle circle {
+  fill: color-mix(in srgb, var(--text-soft) 80%, var(--primary));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .queue-card:hover .queue-drag-handle,
+  .queue-card.dragging .queue-drag-handle {
+    opacity: 1;
+  }
 }
 
 .queue-track {
@@ -608,6 +628,10 @@ a {
     position: static;
     order: 2;
     max-height: none;
+  }
+
+  .queue-drag-handle {
+    opacity: 1;
   }
 
   .card-actions {
