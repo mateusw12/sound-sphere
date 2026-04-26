@@ -2,7 +2,7 @@ import { SearchPanel } from "@/components/search-panel";
 
 export default function SearchPage() {
   return (
-    <section>
+    <section className="search-page">
       <header className="hero compact">
         <p className="kicker">Search</p>
         <h1>Encontre sua proxima faixa favorita.</h1>

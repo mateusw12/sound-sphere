@@ -15,14 +15,27 @@ import {
 export function SearchPanel() {
   const [rawQuery, setRawQuery] = useState("");
   const query = useMemo(() => rawQuery.trim(), [rawQuery]);
+  const hasMinQuery = query.length >= 2;
 
   const { data: tracks, isLoading: isLoadingTracks } = useSearchTracks(query);
   const { data: artists, isLoading: isLoadingArtists } = useSearchArtists(query);
   const { data: albums, isLoading: isLoadingAlbums } = useSearchAlbums(query);
   const { data: playlists, isLoading: isLoadingPlaylists } = useSearchPlaylists(query);
 
+  const trackResults = (tracks?.data ?? []).slice(0, 12);
+  const artistResults = (artists?.data ?? []).slice(0, 8);
+  const albumResults = (albums?.data ?? []).slice(0, 8);
+  const playlistResults = (playlists?.data ?? []).slice(0, 8);
+
+  const isSearching = hasMinQuery && (isLoadingTracks || isLoadingArtists || isLoadingAlbums || isLoadingPlaylists);
+  const hasAnyResults =
+    trackResults.length > 0 ||
+    artistResults.length > 0 ||
+    albumResults.length > 0 ||
+    playlistResults.length > 0;
+
   return (
-    <section>
+    <section className="search-page-panel">
       <div className="search-shell">
         <label htmlFor="search" className="search-label">
           Busque por faixas, artistas e albuns
@@ -44,47 +57,75 @@ export function SearchPanel() {
         </div>
       </div>
 
-      {query.length < 2 ? <p>Digite pelo menos 2 caracteres para buscar.</p> : null}
+      {!hasMinQuery ? <p className="search-state muted">Comece digitando para buscar.</p> : null}
 
-      {isLoadingTracks || isLoadingArtists || isLoadingAlbums || isLoadingPlaylists ? (
-        <p>Buscando...</p>
+      {isSearching ? <p className="search-state">Buscando resultados...</p> : null}
+
+      {hasMinQuery && !isSearching && !hasAnyResults ? (
+        <p className="search-state">
+          Nenhum resultado para <strong>{query}</strong>.
+        </p>
       ) : null}
 
-      <section className="section-block">
-        <h2>Faixas</h2>
-        <div className="grid-cards">
-          {(tracks?.data ?? []).slice(0, 12).map((track) => (
-            <TrackCard key={track.id} track={track} />
-          ))}
-        </div>
-      </section>
+      {hasMinQuery && !isSearching && hasAnyResults ? (
+        <>
+          {trackResults.length > 0 ? (
+            <section className="section-block search-result-block">
+              <div className="search-section-head">
+                <h2>Faixas</h2>
+                <span>{trackResults.length}</span>
+              </div>
+              <div className="grid-cards">
+                {trackResults.map((track) => (
+                  <TrackCard key={track.id} track={track} />
+                ))}
+              </div>
+            </section>
+          ) : null}
 
-      <section className="section-block">
-        <h2>Artistas</h2>
-        <div className="grid-cards">
-          {(artists?.data ?? []).slice(0, 8).map((artist) => (
-            <ArtistCard key={artist.id} artist={artist} />
-          ))}
-        </div>
-      </section>
+          {artistResults.length > 0 ? (
+            <section className="section-block search-result-block">
+              <div className="search-section-head">
+                <h2>Artistas</h2>
+                <span>{artistResults.length}</span>
+              </div>
+              <div className="grid-cards">
+                {artistResults.map((artist) => (
+                  <ArtistCard key={artist.id} artist={artist} />
+                ))}
+              </div>
+            </section>
+          ) : null}
 
-      <section className="section-block">
-        <h2>Albuns</h2>
-        <div className="grid-cards">
-          {(albums?.data ?? []).slice(0, 8).map((album) => (
-            <AlbumCard key={album.id} album={album} />
-          ))}
-        </div>
-      </section>
+          {albumResults.length > 0 ? (
+            <section className="section-block search-result-block">
+              <div className="search-section-head">
+                <h2>Albuns</h2>
+                <span>{albumResults.length}</span>
+              </div>
+              <div className="grid-cards">
+                {albumResults.map((album) => (
+                  <AlbumCard key={album.id} album={album} />
+                ))}
+              </div>
+            </section>
+          ) : null}
 
-      <section className="section-block">
-        <h2>Playlists</h2>
-        <div className="grid-cards">
-          {(playlists?.data ?? []).slice(0, 8).map((playlist) => (
-            <PlaylistCard key={playlist.id} playlist={playlist} />
-          ))}
-        </div>
-      </section>
+          {playlistResults.length > 0 ? (
+            <section className="section-block search-result-block">
+              <div className="search-section-head">
+                <h2>Playlists</h2>
+                <span>{playlistResults.length}</span>
+              </div>
+              <div className="grid-cards">
+                {playlistResults.map((playlist) => (
+                  <PlaylistCard key={playlist.id} playlist={playlist} />
+                ))}
+              </div>
+            </section>
+          ) : null}
+        </>
+      ) : null}
     </section>
   );
 }

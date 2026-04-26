@@ -3,18 +3,23 @@
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useFavorites } from "@/hooks/favorites/use-favorites";
+import type { FavoriteKind } from "@/lib/indexeddb/favorites.db";
 
 function FavoriteGroup({
   title,
   items,
+  onRemove,
 }: {
   title: string;
   items: Array<{
     id: string;
+    entityId: string;
+    kind: FavoriteKind;
     title: string;
     subtitle?: string;
     href?: string;
   }>;
+  onRemove: (item: { kind: FavoriteKind; entityId: string; title: string; subtitle?: string; href?: string }) => void;
 }) {
   return (
     <section className="favorites-section">
@@ -28,11 +33,24 @@ function FavoriteGroup({
           <article key={item.id} className="favorites-item">
             <h3>{item.title}</h3>
             <p>{item.subtitle}</p>
-            {item.href ? (
-              <Link className="button-link" href={item.href}>
-                Abrir
-              </Link>
-            ) : null}
+            <div className="favorites-actions">
+              {item.href ? (
+                <Link className="button-link compact" href={item.href}>
+                  Abrir
+                </Link>
+              ) : null}
+              <button
+                type="button"
+                className="button ghost compact"
+                aria-label="Remover dos favoritos"
+                title="Remover dos favoritos"
+                onClick={() => onRemove(item)}
+              >
+                <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <path d="M4 6H16M7 6V15M10 6V15M13 6V15M6 6L7 4H13L14 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
           </article>
         ))}
       </div>
@@ -42,7 +60,23 @@ function FavoriteGroup({
 
 export default function FavoritesPage() {
   const { status } = useSession();
-  const { groups, loading } = useFavorites();
+  const { groups, loading, toggleFavorite } = useFavorites();
+
+  const handleRemove = (item: {
+    kind: FavoriteKind;
+    entityId: string;
+    title: string;
+    subtitle?: string;
+    href?: string;
+  }) => {
+    void toggleFavorite({
+      kind: item.kind,
+      entityId: item.entityId,
+      title: item.title,
+      subtitle: item.subtitle,
+      href: item.href,
+    });
+  };
 
   if (status === "unauthenticated") {
     return (
@@ -67,10 +101,10 @@ export default function FavoritesPage() {
 
       {loading ? <p>Carregando favoritos...</p> : null}
 
-      <FavoriteGroup title="Musicas" items={groups.tracks} />
-      <FavoriteGroup title="Artistas" items={groups.artists} />
-      <FavoriteGroup title="Albuns" items={groups.albums} />
-      <FavoriteGroup title="Playlists" items={groups.playlists} />
+      <FavoriteGroup title="Musicas" items={groups.tracks} onRemove={handleRemove} />
+      <FavoriteGroup title="Artistas" items={groups.artists} onRemove={handleRemove} />
+      <FavoriteGroup title="Albuns" items={groups.albums} onRemove={handleRemove} />
+      <FavoriteGroup title="Playlists" items={groups.playlists} onRemove={handleRemove} />
     </section>
   );
 }

@@ -347,6 +347,16 @@ a {
   background: color-mix(in srgb, var(--surface) 84%, transparent);
 }
 
+.search-page {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.search-page-panel {
+  display: grid;
+  gap: 0.85rem;
+}
+
 .search-shell.page-search {
   margin-bottom: 0;
 }
@@ -406,6 +416,46 @@ a {
 
 .search-input::placeholder {
   color: color-mix(in srgb, var(--text-soft) 86%, transparent);
+}
+
+.search-state {
+  margin: 0;
+  color: var(--text-soft);
+  border: 1px dashed color-mix(in srgb, var(--border) 85%, transparent);
+  border-radius: 12px;
+  padding: 0.65rem 0.7rem;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+}
+
+.search-state.muted {
+  opacity: 0.9;
+}
+
+.search-result-block {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.78rem;
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+}
+
+.search-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 74%, transparent);
+}
+
+.search-section-head h2 {
+  margin: 0;
+}
+
+.search-section-head span {
+  font-size: 0.76rem;
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.16rem 0.42rem;
 }
 
 .player-shell {
@@ -762,6 +812,18 @@ a {
   color: var(--text-soft);
 }
 
+.favorites-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.favorites-actions .button.compact svg,
+.favorites-actions .button-link.compact svg {
+  width: 0.82rem;
+  height: 0.82rem;
+}
+
 .audio-list {
   margin: 0;
   padding: 0;
@@ -1077,5 +1139,13 @@ a {
 
   .search-shell {
     padding: 0.56rem 0.58rem;
+  }
+
+  .search-page {
+    gap: 0.75rem;
+  }
+
+  .search-result-block {
+    padding: 0.62rem;
   }
 }
