@@ -301,6 +301,10 @@ a {
   gap: 0.35rem;
 }
 
+.card-actions-short {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .button.ghost,
 .button-link.ghost {
   background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
@@ -472,17 +476,27 @@ a {
 
 .queue-card {
   display: grid;
-  grid-template-columns: 1.5rem 1fr auto;
+  grid-template-columns: 1.5rem 1.25rem 1fr auto;
   gap: 0.5rem;
   align-items: center;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.35rem 0.45rem;
   background: color-mix(in srgb, var(--surface-elevated) 80%, transparent);
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
 
 .queue-card.active {
   border-color: color-mix(in srgb, var(--primary) 52%, var(--border));
+}
+
+.queue-card.dragging {
+  opacity: 0.75;
+  transform: scale(0.985);
+}
+
+.queue-card.moved {
+  animation: queue-bump 0.24s ease;
 }
 
 .queue-order {
@@ -495,6 +509,14 @@ a {
   font-size: 0.72rem;
   color: var(--text-soft);
   border: 1px solid var(--border);
+}
+
+.queue-drag-handle {
+  color: var(--text-soft);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  user-select: none;
 }
 
 .queue-track {
@@ -524,6 +546,21 @@ a {
   color: var(--text-soft);
   cursor: pointer;
   font-size: 0.75rem;
+}
+
+@keyframes queue-bump {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--primary) 65%, var(--border));
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes fade-in {

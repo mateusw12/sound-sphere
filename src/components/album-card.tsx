@@ -17,17 +17,20 @@ export function AlbumCard({ album }: AlbumCardProps) {
       ) : null}
       <h3>{album.title}</h3>
       <p>{album.artist?.name ?? "Album"}</p>
-      <Link href={`/album/${album.id}`} className="button-link">
-        Ver album
-      </Link>
-      <FavoriteButton
-        kind="album"
-        entityId={album.id}
-        title={album.title}
-        subtitle={album.artist?.name}
-        image={image}
-        href={`/album/${album.id}`}
-      />
+      <div className="card-actions card-actions-short">
+        <Link href={`/album/${album.id}`} className="button-link compact">
+          Abrir
+        </Link>
+        <FavoriteButton
+          compact
+          kind="album"
+          entityId={album.id}
+          title={album.title}
+          subtitle={album.artist?.name}
+          image={image}
+          href={`/album/${album.id}`}
+        />
+      </div>
     </article>
   );
 }
