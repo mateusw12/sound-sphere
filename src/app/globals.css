@@ -663,6 +663,38 @@ a {
   font-size: 0.82rem;
 }
 
+.artist-tabs {
+  margin-top: 0.85rem;
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.28rem;
+  background: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+}
+
+.artist-tab {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42rem 0.82rem;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 0.84rem;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.artist-tab:hover {
+  transform: translateY(-1px);
+}
+
+.artist-tab.active {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+  color: var(--text);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 38%, transparent);
+}
+
 .favorites-page {
   gap: 1rem;
 }
@@ -1004,6 +1036,15 @@ a {
 
   .home-page {
     gap: 0.82rem;
+  }
+
+  .artist-tabs {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .artist-tab {
+    width: 100%;
   }
 
   .home-section {
