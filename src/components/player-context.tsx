@@ -13,6 +13,7 @@ import {
   addQueueTrack,
   clearQueue,
   listQueue,
+  reorderQueue,
   removeQueueTrack,
   type QueueTrack,
 } from "@/lib/indexeddb/queue.db";
@@ -35,6 +36,7 @@ type PlayerContextData = {
   addToQueue: (track: PlayerTrack) => Promise<void>;
   playFromQueue: (queueId: string) => void;
   removeFromQueue: (queueId: string) => Promise<void>;
+  reorderPlaybackQueue: (orderedIds: string[]) => Promise<void>;
   clearPlaybackQueue: () => Promise<void>;
   playNext: () => void;
   pause: () => void;
@@ -108,6 +110,10 @@ export function PlayerProvider({ children }: PropsWithChildren) {
           setCurrentQueueId(null);
         }
 
+        await mutate();
+      },
+      reorderPlaybackQueue: async (orderedIds) => {
+        await reorderQueue(owner, orderedIds);
         await mutate();
       },
       clearPlaybackQueue: async () => {

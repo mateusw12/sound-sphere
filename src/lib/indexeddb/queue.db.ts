@@ -7,6 +7,7 @@ export type QueueTrack = {
   image?: string;
   owner?: string;
   createdAt: number;
+  position?: number;
 };
 
 const DB_NAME = "soundsphere-db";
@@ -61,6 +62,7 @@ export async function addQueueTrack(
 ) {
   const db = await openDB();
   const createdAt = Date.now();
+  const existing = await listQueue(owner);
 
   const item: QueueTrack = {
     id: key(owner, payload.trackId, createdAt),
@@ -71,6 +73,7 @@ export async function addQueueTrack(
     image: payload.image,
     owner,
     createdAt,
+    position: existing.length + 1,
   };
 
   await new Promise<void>((resolve, reject) => {
@@ -91,7 +94,16 @@ export async function listQueue(owner: string | undefined) {
     request.onsuccess = () => {
       const rows = (request.result as QueueTrack[])
         .filter((item) => (owner ?? "guest") === (item.owner ?? "guest"))
-        .sort((a, b) => a.createdAt - b.createdAt);
+        .sort((a, b) => {
+          const left = a.position ?? Number.MAX_SAFE_INTEGER;
+          const right = b.position ?? Number.MAX_SAFE_INTEGER;
+
+          if (left !== right) {
+            return left - right;
+          }
+
+          return a.createdAt - b.createdAt;
+        });
       resolve(rows);
     };
 
@@ -118,6 +130,32 @@ export async function clearQueue(owner: string | undefined) {
     const tx = db.transaction(STORE, "readwrite");
     const store = tx.objectStore(STORE);
     tracks.forEach((item) => store.delete(item.id));
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+export async function reorderQueue(owner: string | undefined, orderedIds: string[]) {
+  const tracks = await listQueue(owner);
+  const byId = new Map(tracks.map((item) => [item.id, item]));
+  const db = await openDB();
+
+  await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(STORE, "readwrite");
+    const store = tx.objectStore(STORE);
+
+    orderedIds.forEach((id, index) => {
+      const item = byId.get(id);
+      if (!item) {
+        return;
+      }
+
+      store.put({
+        ...item,
+        position: index + 1,
+      });
+    });
+
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
   });

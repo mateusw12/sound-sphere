@@ -25,56 +25,59 @@ export function TrackCard({ track }: TrackCardProps) {
         <Link href={`/artist/${track.artist.id}`}>Artista</Link>
         {track.album ? <Link href={`/album/${track.album.id}`}>Album</Link> : null}
       </div>
-      <button
-        className="button"
-        type="button"
-        disabled={!track.preview}
-        onClick={() => {
-          if (!track.preview) {
-            return;
-          }
+      <div className="card-actions">
+        <button
+          className="button compact"
+          type="button"
+          disabled={!track.preview}
+          onClick={() => {
+            if (!track.preview) {
+              return;
+            }
 
-          playTrack({
-            id: track.id,
-            title: track.title,
-            artist: track.artist.name,
-            preview: track.preview,
-          });
-        }}
-      >
-        {track.preview ? "Ouvir preview" : "Sem preview"}
-      </button>
-      <button className="button ghost" type="button" onClick={stop}>
-        Parar
-      </button>
-      <button
-        className="button ghost"
-        type="button"
-        disabled={!track.preview}
-        onClick={() => {
-          if (!track.preview) {
-            return;
-          }
+            playTrack({
+              id: track.id,
+              title: track.title,
+              artist: track.artist.name,
+              preview: track.preview,
+            });
+          }}
+        >
+          Play
+        </button>
+        <button className="button ghost compact" type="button" onClick={stop}>
+          Stop
+        </button>
+        <button
+          className="button ghost compact"
+          type="button"
+          disabled={!track.preview}
+          onClick={() => {
+            if (!track.preview) {
+              return;
+            }
 
-          void addToQueue({
-            id: track.id,
-            title: track.title,
-            artist: track.artist.name,
-            preview: track.preview,
-            image,
-          });
-        }}
-      >
-        Adicionar a fila
-      </button>
-      <FavoriteButton
-        kind="track"
-        entityId={track.id}
-        title={track.title}
-        subtitle={track.artist.name}
-        image={image}
-        href={track.album ? `/album/${track.album.id}` : undefined}
-      />
+            void addToQueue({
+              id: track.id,
+              title: track.title,
+              artist: track.artist.name,
+              preview: track.preview,
+              image,
+            });
+          }}
+        >
+          +Fila
+        </button>
+        <FavoriteButton
+          compact
+          kind="track"
+          entityId={track.id}
+          title={track.title}
+          subtitle={track.artist.name}
+          image={image}
+          href={track.album ? `/album/${track.album.id}` : undefined}
+        />
+      </div>
     </article>
   );
 }

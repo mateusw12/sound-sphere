@@ -4,6 +4,7 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { MusicPlayer } from "@/components/music-player";
 import { PlayerProvider } from "@/components/player-context";
+import { QueuePanel } from "@/components/queue-panel";
 
 type Theme = "light" | "dark";
 
@@ -30,7 +31,10 @@ export function AppShell({ children }: PropsWithChildren) {
           onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
           themeLabel={theme === "dark" ? "Tema claro" : "Tema escuro"}
         />
-        <main className="content">{children}</main>
+        <section className="content-grid">
+          <main className="content">{children}</main>
+          <QueuePanel />
+        </section>
         <MusicPlayer />
       </div>
     </PlayerProvider>

@@ -17,9 +17,12 @@ function FavoriteGroup({
   }>;
 }) {
   return (
-    <section className="section-block">
-      <h2>{title}</h2>
-      {items.length === 0 ? <p>Nenhum item salvo.</p> : null}
+    <section className="favorites-section">
+      <div className="favorites-section-head">
+        <h2>{title}</h2>
+        <span>{items.length}</span>
+      </div>
+      {items.length === 0 ? <p className="favorites-empty">Nenhum item salvo.</p> : null}
       <div className="favorites-grid">
         {items.map((item) => (
           <article key={item.id} className="favorites-item">
@@ -56,7 +59,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <section className="section-block">
+    <section className="section-block favorites-page">
       <header className="hero compact">
         <p className="kicker">Favoritos</p>
         <h1>Sua biblioteca pessoal</h1>

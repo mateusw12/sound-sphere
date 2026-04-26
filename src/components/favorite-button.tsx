@@ -11,6 +11,7 @@ type FavoriteButtonProps = {
   subtitle?: string;
   image?: string;
   href?: string;
+  compact?: boolean;
 };
 
 export function FavoriteButton(props: FavoriteButtonProps) {
@@ -24,7 +25,15 @@ export function FavoriteButton(props: FavoriteButtonProps) {
   return (
     <button
       type="button"
-      className={active ? "button ghost active" : "button ghost"}
+      className={
+        active
+          ? props.compact
+            ? "button ghost compact active"
+            : "button ghost active"
+          : props.compact
+            ? "button ghost compact"
+            : "button ghost"
+      }
       onClick={() => {
         void toggleFavorite({
           kind: props.kind,
@@ -36,7 +45,7 @@ export function FavoriteButton(props: FavoriteButtonProps) {
         });
       }}
     >
-      {active ? "Favoritado" : "Favoritar"}
+      {props.compact ? (active ? "Fav" : "+Fav") : active ? "Favoritado" : "Favoritar"}
     </button>
   );
 }

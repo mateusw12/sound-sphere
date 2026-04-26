@@ -7,11 +7,8 @@ export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const {
     currentTrack,
-    currentQueueId,
     queue,
     isPlaying,
-    playFromQueue,
-    removeFromQueue,
     clearPlaybackQueue,
     playNext,
     pause,
@@ -92,28 +89,6 @@ export function MusicPlayer() {
           Limpar fila
         </button>
       </div>
-
-      {queue.length > 0 ? (
-        <div className="player-queue">
-          {queue.slice(0, 4).map((item) => (
-            <div
-              key={item.id}
-              className={item.id === currentQueueId ? "queue-item active" : "queue-item"}
-            >
-              <button type="button" className="queue-play" onClick={() => playFromQueue(item.id)}>
-                {item.title}
-              </button>
-              <button
-                type="button"
-                className="queue-remove"
-                onClick={() => void removeFromQueue(item.id)}
-              >
-                x
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : null}
 
       <div className="player-note">
         <p className="player-artist">A fila toca cada preview em sequencia automaticamente.</p>
