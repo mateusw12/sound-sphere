@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { GenreFilterChips } from "@/components/genre-filter-chips";
 import { TrackCard } from "@/components/track-card";
@@ -12,8 +13,9 @@ export default function TracksPage() {
   const { data: genreTracks, isLoading: isLoadingGenreTracks } = useSearchTracks(selectedGenre);
 
   const isGenreMode = selectedGenre.trim().length > 1;
+  const isGenreLoading = isGenreMode && (isLoadingGenreTracks || !genreTracks);
 
-  if ((isLoading && !isGenreMode) || (isGenreMode && isLoadingGenreTracks)) {
+  if (isLoading && !isGenreMode) {
     return <p>Carregando musicas...</p>;
   }
 
@@ -34,11 +36,26 @@ export default function TracksPage() {
 
       {isGenreMode ? <p className="genre-result-note">Filtrando musicas por: {selectedGenre}</p> : null}
 
-      <div className="grid-cards">
-        {tracks.map((track) => (
-          <TrackCard key={track.id} track={track} />
-        ))}
-      </div>
+      {isGenreLoading ? (
+        <div className="inline-loading" aria-live="polite" aria-busy="true">
+          <Image
+            src="/assets/branding/sound-sphere.png"
+            alt="Carregando musicas"
+            width={42}
+            height={42}
+            className="inline-loading-logo"
+          />
+          <p>Buscando musicas do genero...</p>
+        </div>
+      ) : tracks.length === 0 ? (
+        <p className="search-state">Nenhuma musica encontrada para este genero.</p>
+      ) : (
+        <div className="grid-cards">
+          {tracks.map((track) => (
+            <TrackCard key={track.id} track={track} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

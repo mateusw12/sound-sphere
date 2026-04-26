@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +10,7 @@ type PageSearchBarProps = {
 
 export function PageSearchBar({ placeholder = "Busque musicas, artistas, albuns ou playlists" }: PageSearchBarProps) {
   const [query, setQuery] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -19,6 +21,7 @@ export function PageSearchBar({ placeholder = "Busque musicas, artistas, albuns 
       return;
     }
 
+    setSubmitting(true);
     router.push(`/search?q=${encodeURIComponent(normalized)}`);
   }
 
@@ -43,8 +46,22 @@ export function PageSearchBar({ placeholder = "Busque musicas, artistas, albuns 
             placeholder={placeholder}
           />
         </div>
-        <button type="submit" className="button compact" disabled={query.trim().length < 2}>
-          Buscar
+        <button type="submit" className="button compact" disabled={query.trim().length < 2 || submitting}>
+          {submitting ? (
+            <span className="search-button-loading">
+              <Image
+                src="/assets/branding/sound-sphere.png"
+                alt=""
+                width={16}
+                height={16}
+                className="search-button-loading-logo"
+                aria-hidden
+              />
+              Buscando...
+            </span>
+          ) : (
+            "Buscar"
+          )}
         </button>
       </div>
     </form>
