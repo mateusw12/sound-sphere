@@ -29,6 +29,8 @@ export function TrackCard({ track }: TrackCardProps) {
         <button
           className="button compact"
           type="button"
+          aria-label="Tocar preview"
+          title="Tocar preview"
           disabled={!track.preview}
           onClick={() => {
             if (!track.preview) {
@@ -43,14 +45,26 @@ export function TrackCard({ track }: TrackCardProps) {
             });
           }}
         >
-          Play
-        </button>
-        <button className="button ghost compact" type="button" onClick={stop}>
-          Stop
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <path d="M7 5L15 10L7 15V5Z" fill="currentColor" />
+          </svg>
         </button>
         <button
           className="button ghost compact"
           type="button"
+          aria-label="Parar"
+          title="Parar"
+          onClick={stop}
+        >
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <rect x="6" y="6" width="8" height="8" rx="1.2" fill="currentColor" />
+          </svg>
+        </button>
+        <button
+          className="button ghost compact"
+          type="button"
+          aria-label="Adicionar na fila"
+          title="Adicionar na fila"
           disabled={!track.preview}
           onClick={() => {
             if (!track.preview) {
@@ -66,7 +80,14 @@ export function TrackCard({ track }: TrackCardProps) {
             });
           }}
         >
-          +Fila
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <path
+              d="M4.5 6.5H13.5M4.5 10H13.5M4.5 13.5H10.5M14.5 12V16M12.5 14H16.5"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+            />
+          </svg>
         </button>
         <FavoriteButton
           compact

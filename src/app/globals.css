@@ -295,6 +295,13 @@ a {
   line-height: 1;
 }
 
+.button.compact svg,
+.button-link.compact svg {
+  width: 0.92rem;
+  height: 0.92rem;
+  display: block;
+}
+
 .card-actions {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
