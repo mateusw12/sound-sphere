@@ -42,8 +42,8 @@ export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
       </nav>
 
       <div className="nav-actions">
-        <button type="button" className="button ghost" onClick={onToggleTheme}>
-          {themeLabel}
+        <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={themeLabel}>
+          <span>{themeLabel.toLowerCase().includes("claro") ? "☀" : "☾"}</span>
         </button>
         {status === "authenticated" ? (
           <button type="button" className="button" onClick={() => void signOut()}>

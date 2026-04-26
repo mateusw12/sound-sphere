@@ -11,7 +11,7 @@ type TrackCardProps = {
 };
 
 export function TrackCard({ track }: TrackCardProps) {
-  const { playTrack } = usePlayer();
+  const { playTrack, addToQueue } = usePlayer();
   const image = track.album?.cover_medium ?? track.album?.cover;
 
   return (
@@ -43,6 +43,26 @@ export function TrackCard({ track }: TrackCardProps) {
         }}
       >
         {track.preview ? "Ouvir preview" : "Sem preview"}
+      </button>
+      <button
+        className="button ghost"
+        type="button"
+        disabled={!track.preview}
+        onClick={() => {
+          if (!track.preview) {
+            return;
+          }
+
+          void addToQueue({
+            id: track.id,
+            title: track.title,
+            artist: track.artist.name,
+            preview: track.preview,
+            image,
+          });
+        }}
+      >
+        Adicionar a fila
       </button>
       <FavoriteButton
         kind="track"
