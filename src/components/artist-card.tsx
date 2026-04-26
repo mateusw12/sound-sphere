@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { DeezerArtist } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
-import { FavoriteKind } from "@/lib/indexeddb";
+import { FavoriteKind } from "@/lib/enum";
 
 type ArtistCardProps = {
   artist: DeezerArtist;

@@ -7,8 +7,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import useSWR from "swr";
-import { useSession } from "next-auth/react";
 import {
   addQueueTrack,
   clearQueue,
@@ -17,6 +15,7 @@ import {
   removeQueueTrack,
   type QueueTrack,
 } from "@/lib/indexeddb";
+import { useIndexedDbCollection } from "@/hooks/indexeddb";
 
 type PlayerTrack = {
   id: number;
@@ -47,16 +46,14 @@ type PlayerContextData = {
 const PlayerContext = createContext<PlayerContextData | undefined>(undefined);
 
 export function PlayerProvider({ children }: PropsWithChildren) {
-  const { data: session } = useSession();
-  const owner = session?.user?.email ?? undefined;
-
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack | null>(null);
   const [currentQueueId, setCurrentQueueId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const queueKey = `player-queue:${owner ?? "guest"}`;
-  const { data, isLoading, mutate } = useSWR<QueueTrack[]>(queueKey, () => listQueue(owner));
-  const queue = useMemo(() => data ?? [], [data]);
+  const { items: queue, isLoading, runAndRefresh } = useIndexedDbCollection<QueueTrack>({
+    namespace: "player-queue",
+    list: listQueue,
+  });
 
   const toPlayerTrack = (item: QueueTrack): PlayerTrack => ({
     id: item.trackId,
@@ -83,15 +80,15 @@ export function PlayerProvider({ children }: PropsWithChildren) {
           return;
         }
 
-        await addQueueTrack(owner, {
-          trackId: track.id,
-          title: track.title,
-          artist: track.artist,
-          preview: track.preview,
-          image: track.image,
+        await runAndRefresh(async (owner) => {
+          await addQueueTrack(owner, {
+            trackId: track.id,
+            title: track.title,
+            artist: track.artist,
+            preview: track.preview,
+            image: track.image,
+          });
         });
-
-        await mutate();
       },
       playFromQueue: (queueId) => {
         const item = queue.find((entry) => entry.id === queueId);
@@ -104,22 +101,24 @@ export function PlayerProvider({ children }: PropsWithChildren) {
         setIsPlaying(true);
       },
       removeFromQueue: async (queueId) => {
-        await removeQueueTrack(queueId);
+        await runAndRefresh(async () => {
+          await removeQueueTrack(queueId);
+        });
 
         if (queueId === currentQueueId) {
           setCurrentQueueId(null);
         }
-
-        await mutate();
       },
       reorderPlaybackQueue: async (orderedIds) => {
-        await reorderQueue(owner, orderedIds);
-        await mutate();
+        await runAndRefresh(async (owner) => {
+          await reorderQueue(owner, orderedIds);
+        });
       },
       clearPlaybackQueue: async () => {
-        await clearQueue(owner);
+        await runAndRefresh(async (owner) => {
+          await clearQueue(owner);
+        });
         setCurrentQueueId(null);
-        await mutate();
       },
       playNext: () => {
         if (queue.length === 0) {
@@ -157,7 +156,7 @@ export function PlayerProvider({ children }: PropsWithChildren) {
         setCurrentQueueId(null);
       },
     }),
-    [currentTrack, currentQueueId, isLoading, isPlaying, mutate, owner, queue],
+    [currentTrack, currentQueueId, isLoading, isPlaying, queue, runAndRefresh],
   );
 
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;

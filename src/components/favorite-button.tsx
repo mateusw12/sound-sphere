@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useFavorites } from "@/hooks/favorites/use-favorites";
-import type { FavoriteKind } from "@/lib/indexeddb";
+import type { FavoriteKind } from "@/lib/enum";
 
 type FavoriteButtonProps = {
   kind: FavoriteKind;

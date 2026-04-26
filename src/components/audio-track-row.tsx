@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { DeezerTrack } from "@/lib/dto";
 import { FavoriteButton } from "@/components/favorite-button";
 import { usePlayer } from "@/components/player-context";
-import { FavoriteKind } from "@/lib/indexeddb";
+import { FavoriteKind } from "@/lib/enum";
 
 type AudioTrackRowProps = {
   track: DeezerTrack;
