@@ -18,12 +18,14 @@ export default function HomePage() {
   }
 
   return (
-    <section>
+    <section className="home-page">
       <header className="hero">
         <p className="kicker">Discover music now</p>
         <h1>Explore o que esta em alta no mundo.</h1>
       </header>
-      <PageSearchBar />
+      <div className="home-search-wrap">
+        <PageSearchBar />
+      </div>
 
       <section className="section-block home-section">
         <div className="home-section-head">
