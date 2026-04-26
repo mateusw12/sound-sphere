@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { AlbumCard } from "@/components/album-card";
-import { TrackCard } from "@/components/track-card";
+import { AudioTrackList } from "@/components/audio-track-list";
 import { useArtist, useArtistAlbums, useArtistTop } from "@/hooks/deezer";
 
 export default function ArtistPage() {
@@ -30,11 +30,7 @@ export default function ArtistPage() {
 
       <section className="section-block">
         <h2>Top faixas</h2>
-        <div className="grid-cards">
-          {(topTracks?.data ?? []).slice(0, 10).map((track) => (
-            <TrackCard key={track.id} track={track} />
-          ))}
-        </div>
+        <AudioTrackList tracks={topTracks?.data ?? []} limit={20} emptyMessage="Artista sem faixas." />
       </section>
 
       <section className="section-block">
