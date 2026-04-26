@@ -5,5 +5,6 @@ export {
   useSearchAlbums,
   useSearchArtists,
   useSearchPlaylists,
+  useTopPlaylists,
   useSearchTracks,
 } from "@/hooks/deezer/use-search";

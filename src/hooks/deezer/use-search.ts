@@ -36,3 +36,7 @@ export function useSearchPlaylists(query: string) {
     fetcher,
   );
 }
+
+export function useTopPlaylists() {
+  return useSWR<DeezerListResponse<DeezerPlaylist>>(SearchService.playlists("top"), fetcher);
+}
