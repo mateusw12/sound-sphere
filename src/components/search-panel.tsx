@@ -27,13 +27,21 @@ export function SearchPanel() {
         <label htmlFor="search" className="search-label">
           Busque por faixas, artistas e albuns
         </label>
-        <input
-          id="search"
-          value={rawQuery}
-          onChange={(event) => setRawQuery(event.target.value)}
-          className="search-input"
-          placeholder="Ex.: Daft Punk"
-        />
+        <div className="search-input-wrap">
+          <span className="search-icon" aria-hidden>
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M13 13L16.5 16.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </span>
+          <input
+            id="search"
+            value={rawQuery}
+            onChange={(event) => setRawQuery(event.target.value)}
+            className="search-input"
+            placeholder="Ex.: Daft Punk"
+          />
+        </div>
       </div>
 
       {query.length < 2 ? <p>Digite pelo menos 2 caracteres para buscar.</p> : null}
