@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { TrackCard } from "@/components/track-card";
+import { AudioTrackList } from "@/components/audio-track-list";
 import { usePlaylist, usePlaylistTracks } from "@/hooks/deezer";
 
 export default function PlaylistPage() {
@@ -29,11 +29,7 @@ export default function PlaylistPage() {
 
       <section className="section-block">
         <h2>Faixas da playlist</h2>
-        <div className="grid-cards">
-          {(tracks?.data ?? []).slice(0, 40).map((track) => (
-            <TrackCard key={track.id} track={track} />
-          ))}
-        </div>
+        <AudioTrackList tracks={tracks?.data ?? []} limit={40} emptyMessage="Playlist sem faixas." />
       </section>
     </section>
   );
