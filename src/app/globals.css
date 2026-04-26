@@ -845,11 +845,27 @@ a {
 }
 
 .queue-remove {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   background: transparent;
   color: var(--text-soft);
   cursor: pointer;
-  font-size: 0.75rem;
+  border-radius: 999px;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.queue-remove:hover {
+  color: color-mix(in srgb, var(--primary) 78%, var(--text));
+  background: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+}
+
+.queue-remove svg {
+  width: 0.84rem;
+  height: 0.84rem;
 }
 
 @keyframes queue-bump {
