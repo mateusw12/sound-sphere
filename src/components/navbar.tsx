@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useAuth } from "@/components/auth-context";
 
 type NavbarProps = {
   onToggleTheme: () => void;
@@ -12,10 +12,10 @@ type NavbarProps = {
 
 export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const { isAuthenticated, logout, user } = useAuth();
 
   const links = [
-    { href: "/", label: "Home" },
+    { href: "/home", label: "Home" },
     { href: "/tracks", label: "Musicas" },
     { href: "/artists", label: "Artistas" },
     { href: "/albums", label: "Albuns" },
@@ -27,7 +27,7 @@ export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
 
   return (
     <header className="nav-shell">
-      <Link href="/" className="brand">
+      <Link href="/home" className="brand">
         <Image
           src="/assets/branding/sound-sphere.png"
           alt="SoundSphere"
@@ -54,16 +54,16 @@ export function Navbar({ onToggleTheme, themeLabel }: NavbarProps) {
         <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={themeLabel}>
           <span>{themeLabel.toLowerCase().includes("claro") ? "☀" : "☾"}</span>
         </button>
-        {status === "authenticated" ? (
-          <button type="button" className="button" onClick={() => void signOut()}>
+        {isAuthenticated ? (
+          <button type="button" className="button" onClick={logout}>
             Sair
           </button>
         ) : (
-          <button type="button" className="button" onClick={() => void signIn("google")}>
+          <Link href="/" className="button-link">
             Entrar
-          </button>
+          </Link>
         )}
-        {session?.user?.name ? <span className="session-chip">{session.user.name}</span> : null}
+        {user?.name ? <span className="session-chip">{user.name}</span> : null}
       </div>
     </header>
   );

@@ -1,73 +1,93 @@
 "use client";
 
-import { ArtistCard } from "@/components/artist-card";
-import { AlbumCard } from "@/components/album-card";
-import { TrackCard } from "@/components/track-card";
-import { PageSearchBar } from "@/components/page-search-bar";
-import { useChart } from "@/hooks/deezer";
+import { FormEvent, useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth-context";
 
-export default function HomePage() {
-  const { data, isLoading, error } = useChart();
+export default function SignInPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const router = useRouter();
+  const { isAuthenticated, hydrated, login } = useAuth();
 
-  if (isLoading) {
-    return <p>Carregando charts...</p>;
-  }
+  useEffect(() => {
+    if (hydrated && isAuthenticated) {
+      router.replace("/home");
+    }
+  }, [hydrated, isAuthenticated, router]);
 
-  if (error) {
-    return <p>Falha ao carregar chart da Deezer.</p>;
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    login({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+    });
+
+    router.push("/home");
+  };
+
+  if (!hydrated) {
+    return null;
   }
 
   return (
-    <section className="home-page">
-      <header className="hero">
-        <p className="kicker">Discover music now</p>
-        <h1>Explore o que esta em alta no mundo.</h1>
-      </header>
-      <div className="home-search-wrap">
-        <PageSearchBar />
+    <section className="auth-screen">
+      <div className="auth-bg-shape auth-bg-shape-left" aria-hidden />
+      <div className="auth-bg-shape auth-bg-shape-right" aria-hidden />
+
+      <article className="auth-card">
+        <header className="auth-head">
+          <Image
+            src="/assets/branding/sound-sphere.png"
+            alt="SoundSphere"
+            width={72}
+            height={72}
+            className="auth-logo"
+            priority
+          />
+          <p className="kicker">Boas-vindas</p>
+          <h1>Entre na SoundSphere</h1>
+          <p>Use seu nome e email para acessar sua experience musical personalizada.</p>
+        </header>
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label htmlFor="name">Nome</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Seu nome"
+            autoComplete="name"
+            required
+            minLength={2}
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="voce@email.com"
+            autoComplete="email"
+            required
+          />
+
+          <button type="submit" className="button auth-submit">
+            Entrar
+          </button>
+        </form>
+      </article>
+      <div className="auth-copy">
+        <p className="kicker">Music discovery hub</p>
+        <h2>Descubra artistas, trilhas e albuns no mesmo lugar.</h2>
+        <p>
+          Sua sessão fica salva localmente para continuar de onde parou.
+        </p>
       </div>
-
-      <section className="section-block home-section">
-        <div className="home-section-head">
-          <div>
-            <h2>Top Tracks</h2>
-            <p>As faixas com maior movimento agora.</p>
-          </div>
-        </div>
-        <div className="grid-cards">
-          {(data?.tracks.data ?? []).slice(0, 16).map((track) => (
-            <TrackCard key={track.id} track={track} />
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block home-section">
-        <div className="home-section-head">
-          <div>
-            <h2>Top Artists</h2>
-            <p>Artistas em evidência nas paradas.</p>
-          </div>
-        </div>
-        <div className="grid-cards">
-          {(data?.artists.data ?? []).slice(0, 10).map((artist) => (
-            <ArtistCard key={artist.id} artist={artist} />
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block home-section">
-        <div className="home-section-head">
-          <div>
-            <h2>Top Albums</h2>
-            <p>Albuns com melhor desempenho global.</p>
-          </div>
-        </div>
-        <div className="grid-cards">
-          {(data?.albums.data ?? []).slice(0, 10).map((album) => (
-            <AlbumCard key={album.id} album={album} />
-          ))}
-        </div>
-      </section>
     </section>
   );
 }

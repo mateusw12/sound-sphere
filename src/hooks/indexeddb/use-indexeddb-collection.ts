@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useMemo } from "react";
-import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { useAuth } from "@/components/auth-context";
 
 type OwnerAwareList<TItem> = (owner: string | undefined) => Promise<TItem[]>;
 
@@ -15,8 +15,8 @@ export function useIndexedDbCollection<TItem>({
   namespace,
   list,
 }: UseIndexedDbCollectionParams<TItem>) {
-  const { data: session } = useSession();
-  const owner = session?.user?.email ?? undefined;
+  const { user } = useAuth();
+  const owner = user?.email ?? undefined;
 
   const cacheKey = `${namespace}:${owner ?? "guest"}`;
   const { data, isLoading, mutate, error } = useSWR<TItem[]>(

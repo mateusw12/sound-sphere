@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
 import { useFavorites } from "@/hooks/favorites/use-favorites";
+import { useAuth } from "@/components/auth-context";
 import type { FavoriteKind } from "@/lib/enum";
 
 function FavoriteGroup({
@@ -59,7 +59,7 @@ function FavoriteGroup({
 }
 
 export default function FavoritesPage() {
-  const { status } = useSession();
+  const { isAuthenticated } = useAuth();
   const { groups, loading, toggleFavorite } = useFavorites();
 
   const handleRemove = (item: {
@@ -78,16 +78,16 @@ export default function FavoritesPage() {
     });
   };
 
-  if (status === "unauthenticated") {
+  if (!isAuthenticated) {
     return (
       <section className="section-block">
         <header className="hero compact">
           <p className="kicker">Favoritos</p>
-          <h1>Entre com Google para sincronizar seus favoritos</h1>
+          <h1>Entre para acessar e sincronizar seus favoritos</h1>
         </header>
-        <button type="button" className="button" onClick={() => void signIn("google")}>
-          Entrar com Google
-        </button>
+        <Link href="/" className="button-link">
+          Ir para login
+        </Link>
       </section>
     );
   }
